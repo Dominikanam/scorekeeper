@@ -41,8 +41,19 @@ it('on minus click, callback called with correct value', () => {
 
 	const plusButton = playerComponent.find('.Player__button');
 
-	plusButton.last().simulate('click');
+	plusButton.at(1).simulate('click');
 
 	expect(mockedOnPlayerScoreChange).toBeCalledWith(-1);
+});
+
+it('on remove click, remove callback called', () => {
+	const mockedOnPlayerRemove = jest.fn();
+	const playerComponent = shallow(<Player onPlayerRemove={mockedOnPlayerRemove} />);
+
+	const plusButton = playerComponent.find('.Player__button');
+
+	plusButton.last().simulate('click');
+
+	expect(mockedOnPlayerRemove).toBeCalled();
 });
 

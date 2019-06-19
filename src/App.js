@@ -6,7 +6,6 @@ import AddPlayer from './components/AddPlayer/AddPlayer';
 class App extends Component {
  constructor() {
    super();
-   this.onScoreUpdate = this.onScoreUpdate.bind(this);
 
    this.state = {
      players: [
@@ -43,10 +42,16 @@ onPlayerAdd = (playerName) => {
   })
 }
 
+onPlayerRemove = (playerIndex) => {
+  this.setState({
+    players: this.state.players.filter((player, i) => i !== playerIndex)
+  });
+}
+
  render() {
    return (
      <div className="App">
-       <PlayersList players={this.state.players} onScoreUpdate={this.onScoreUpdate}/>
+       <PlayersList players={this.state.players} onScoreUpdate={this.onScoreUpdate} onPlayerRemove={this.onPlayerRemove} />
        <AddPlayer onPlayerAdd={this.onPlayerAdd} />
      </div>
    );

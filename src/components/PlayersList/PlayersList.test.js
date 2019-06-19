@@ -24,7 +24,7 @@ it('renders correct numbers of players', () => {
   expect(expectedPlayersNumber).toEqual(2);
 });
 
-it('renders correct numbers of players', () => {
+it('processes onPlayerScoreChange callback', () => {
   const players = [
     {
         name: 'Kunegunda',
@@ -42,4 +42,24 @@ it('renders correct numbers of players', () => {
   onPlayerScoreChange(10);
 
   expect(mockedOnScoreUpdate).toBeCalledWith(0, 10);
+});
+
+it('processes onPlayerRemove callback', () => {
+  const players = [
+    {
+        name: 'Kunegunda',
+        score: 5
+    },
+    {
+        name: 'Antoś',
+        score: 0
+    }
+  ];
+  const mockedOnPlayerRemove = jest.fn();
+  const playerComponent = shallow(<PlayersList players={players} onPlayerRemove={mockedOnPlayerRemove} />);
+  const firstPlayer = playerComponent.find(Player).first();
+  const onPlayerScoreChange = firstPlayer.prop('onPlayerRemove');
+  onPlayerScoreChange();
+
+  expect(mockedOnPlayerRemove).toBeCalledWith(0);
 });
